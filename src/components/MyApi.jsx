@@ -24,8 +24,9 @@ function MyApi({ users, search }) {
 			headers: new Headers({ Accept: "application/vnd.github+json" }),
 		});
 		const data = await response.json();
+		const orderedData = data.sort((a, b) => a.login > b.login ? 1: -1); 
 		console.log(data);
-		users(data);
+		users(orderedData);
 	};
 
 	return (
