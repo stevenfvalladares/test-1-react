@@ -32,8 +32,8 @@ function MyApi({ users, search }) {
 		<div className="container-sm">
 			<div className="d-flex flex-column justify-content-center align-items-center">
 				{search.map((user) => (
-					<List sx={{ width: "100%", maxWidth: 360, bgcolor: "background.paper"}}>
-						<ListItem alignItems="flex-start" key={user.login}>
+					<List sx={{ width: "100%", maxWidth: 360, bgcolor: "background.paper"}} key={user.login}>
+						<ListItem alignItems="flex-start">
 							<ListItemAvatar>
 								<Avatar alt="Remy Sharp" src={user.avatar_url} />
 							</ListItemAvatar>
@@ -47,7 +47,7 @@ function MyApi({ users, search }) {
 											variant="body2"
 											color="text.primary"
 										>
-											<i class="bi bi-link-45deg"> </i>
+											<i className="bi bi-link-45deg"> </i>
 											<a
 												href={user.html_url}
 												target="_blank"
@@ -57,7 +57,7 @@ function MyApi({ users, search }) {
 											</a>
 										</Typography>
 										<br />
-										<i class="bi bi-people-fill"> </i>
+										<i className="bi bi-people-fill"> </i>
 										{user.followers_url.length} followers - {user.following_url.length}{" "}
 										following
 									</React.Fragment>
@@ -66,7 +66,7 @@ function MyApi({ users, search }) {
 						</ListItem>
 						<Divider variant="inset" component="li" />
 					</List>
-				))}
+				)).sort()}
 			</div>
 		</div>
 	);
