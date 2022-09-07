@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 
 /* import of the main styles of material UI and its components */
 import List from "@mui/material/List";
@@ -9,8 +9,9 @@ import ListItemAvatar from "@mui/material/ListItemAvatar";
 import Avatar from "@mui/material/Avatar";
 import Typography from "@mui/material/Typography";
 
-function MyApi() {
-	const [gitHubUsers, setGitHubUsers] = useState([]);
+/* destructuring prosp in component */
+function MyApi({ users, search }) {
+	
 
 	useEffect(() => {
 		fetchGitHubUsers();
@@ -24,35 +25,48 @@ function MyApi() {
 		});
 		const data = await response.json();
 		console.log(data);
+		users(data);
 	};
 
 	return (
 		<div className="container-sm">
 			<div className="d-flex flex-column justify-content-center align-items-center">
-				<List sx={{ width: "100%", maxWidth: 360, bgcolor: "background.paper" }}>
-					<ListItem alignItems="flex-start">
-						<ListItemAvatar>
-							<Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" />
-						</ListItemAvatar>
-						<ListItemText
-							primary="Brunch this weekend?"
-							secondary={
-								<React.Fragment>
-									<Typography
-										sx={{ display: "inline" }}
-										component="span"
-										variant="body2"
-										color="text.primary"
-									>
-										Ali Connors
-									</Typography>
-									{" — I'll be in your neighborhood doing errands this…"}
-								</React.Fragment>
-							}
-						/>
-					</ListItem>
-					<Divider variant="inset" component="li" />
-				</List>
+				{search.map((user) => (
+					<List sx={{ width: "100%", maxWidth: 360, bgcolor: "background.paper"}}>
+						<ListItem alignItems="flex-start" key={user.login}>
+							<ListItemAvatar>
+								<Avatar alt="Remy Sharp" src={user.avatar_url} />
+							</ListItemAvatar>
+							<ListItemText
+								primary={user.login}
+								secondary={
+									<React.Fragment>
+										<Typography
+											sx={{ display: "inline" }}
+											component="span"
+											variant="body2"
+											color="text.primary"
+										>
+											<i class="bi bi-link-45deg"> </i>
+											<a
+												href={user.html_url}
+												target="_blank"
+												className="text-decoration-none"
+											>
+												{user.html_url}
+											</a>
+										</Typography>
+										<br />
+										<i class="bi bi-people-fill"> </i>
+										{user.followers_url.length} followers - {user.following_url.length}{" "}
+										following
+									</React.Fragment>
+								}
+							/>
+						</ListItem>
+						<Divider variant="inset" component="li" />
+					</List>
+				))}
 			</div>
 		</div>
 	);
